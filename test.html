@@ -24,13 +24,16 @@
   </video>
 
   <script>
-    // Intentar activar el sonido si el navegador lo permite
     const video = document.getElementById('videoElement');
     video.muted = false;
     video.volume = 1.0;
 
-    // Algunos navegadores requieren interacción del usuario para sonido
     document.body.addEventListener('click', () => {
+      video.play();
+    });
+
+    document.addEventListener('keydown', () => {
+      video.currentTime = 0;
       video.play();
     });
   </script>
