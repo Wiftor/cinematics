@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-  <video autoplay muted playsinline id="videoElement">
+  <video muted playsinline id="videoElement">
     <source src="test.mp4" type="video/mp4">
     Tu navegador no soporta video HTML5.
   </video>
@@ -28,20 +28,30 @@
     video.muted = false;
     video.volume = 1.0;
 
-    function restartVideo() {
-      video.currentTime = 0;
-      video.play();
-    }
-
-    // Escucha múltiples formas de interacción
     const interactionEvents = ['click', 'mousemove', 'keydown', 'touchstart'];
 
-    interactionEvents.forEach(eventType => {
-      document.body.addEventListener(eventType, () => {
-        restartVideo();
+    function handleInteraction() {
+      video.currentTime = 0;
+      video.play();
+
+      // Después de la primera interacción, usar solo para reiniciar
+      interactionEvents.forEach(eventType => {
+        document.body.addEventListener(eventType, () => {
+          video.currentTime = 0;
+          video.play();
+        });
       });
+
+      // Quitar esta función para que no se vuelva a ejecutar más de una vez
+      interactionEvents.forEach(eventType => {
+        document.body.removeEventListener(eventType, handleInteraction);
+      });
+    }
+
+    // Activar función en la primera interacción
+    interactionEvents.forEach(eventType => {
+      document.body.addEventListener(eventType, handleInteraction);
     });
   </script>
 </body>
 </html>
-
