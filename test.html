@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Local - Test</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted playsinline id="videoElement">
+    <source src="test.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+
+  <script>
+    // Intentar activar el sonido si el navegador lo permite
+    const video = document.getElementById('videoElement');
+    video.muted = false;
+    video.volume = 1.0;
+
+    // Algunos navegadores requieren interacción del usuario para sonido
+    document.body.addEventListener('click', () => {
+      video.play();
+    });
+  </script>
+</body>
+</html>
